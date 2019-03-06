@@ -20,6 +20,7 @@
 
 - 对象中this指针
   - this指向了当前代码运行时的对象
+  - 详细的this指针查看`this.md`
 
 ### 适合初学者的JavaScript面向对象
 - 定义对象(class类 Prototype原型/原型链)
