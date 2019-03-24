@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>todolist</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id='todolist'>
+    <input type="text" 
+           placeholder="add A todo?" 
+           v-model="newTodoText">
+    <button @click="addTodo">add</button>
+    <ul>
+      <li v-for="(todo,idx) in todos" 
+          is="todo-module" 
+          :key="todo.idx" 
+          :text="todo.text" 
+          :idx="todo.idx"
+          @del="delTodo(idx)">
+      </li>
+    </ul>
+  </div>
+  
+  <script>
+    const todoModule = {
+      template:`
+      <li>
+        {{text}}
+        <button @click="$emit('del')" >del</button>
+      </li>`,
+      props: ['text', 'idx']
+    };
+    new Vue({
+      el: '#todolist',
+      name: 'todolist',
+      components: {
+        'todo-module': todoModule,
+      },
+      data: function () {
+        return {
+          newTodoText: '',
+          todos: [
+            {
+              idx: 1,
+              text: 'vue'
+            },
+            {
+              idx: 2,
+              text: 'react'
+            },
+            {
+              idx: 3,
+              text: 'angular'
+            }]
+        };
+      },
+      methods: {
+        addTodo: function () {
+          if(this.newTodoText){
+            this.todos.push({
+                idx: this.todos.length + 1,
+                text: this.newTodoText
+            });
+            this.newTodoText=''; 
+          }else{
+            alert('No todo to add, please input something.');
+          }                     
+        },
+        delTodo: function (idx) {
+          this.todos.splice(idx, 1);
+        }
+      },
+    })
+
+  </script>
+
+</body>
+
+</html>
